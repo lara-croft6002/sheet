@@ -1,0 +1,99 @@
+Slip 29
+Q1
+import java.util.Scanner;
+
+public class RectangleCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Input length and breadth
+        System.out.print("Enter the length of the rectangle: ");
+        double length = scanner.nextDouble();
+        
+        System.out.print("Enter the breadth of the rectangle: ");
+        double breadth = scanner.nextDouble();
+        
+        // Calculate area and perimeter
+        double area = calculateArea(length, breadth);
+        double perimeter = calculatePerimeter(length, breadth);
+        
+        // Display results
+        System.out.printf("Area of the rectangle: %.2f\n", area);
+        System.out.printf("Perimeter of the rectangle: %.2f\n", perimeter);
+        
+        scanner.close();
+    }
+
+    // Method to calculate area
+    public static double calculateArea(double length, double breadth) {
+        return length * breadth;
+    }
+
+    // Method to calculate perimeter
+    public static double calculatePerimeter(double length, double breadth) {
+        return 2 * (length + breadth);
+    }
+}
+-----------------------
+Q2
+import java.awt.*;
+import java.awt.event.*;
+
+public class MouseEventDemo extends Frame implements MouseMotionListener, MouseListener {
+    private TextField positionField;
+
+    public MouseEventDemo() {
+        // Create a Frame
+        Frame frame = new Frame("Mouse Event Demo");
+        
+        // Create a TextField to display mouse position
+        positionField = new TextField();
+        positionField.setBounds(50, 50, 300, 30);
+        
+        // Add the TextField to the frame
+        frame.add(positionField);
+        
+        // Set layout
+        frame.setLayout(null);
+        
+        // Add mouse listeners
+        frame.addMouseListener(this);
+        frame.addMouseMotionListener(this);
+        
+        // Set frame properties
+        frame.setSize(400, 300);
+        frame.setVisible(true);
+        
+        // Add window listener for closing the window
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+    }
+
+    // MouseMotionListener method
+    public void mouseMoved(MouseEvent e) {
+        // Get the mouse position while moving
+        int x = e.getX();
+        int y = e.getY();
+        positionField.setText("Mouse Moving at: X=" + x + ", Y=" + y);
+    }
+
+    // MouseListener methods
+    public void mouseClicked(MouseEvent e) {
+        // Get the mouse position and display it in the TextField
+        int x = e.getX();
+        int y = e.getY();
+        positionField.setText("Mouse Clicked at: X=" + x + ", Y=" + y);
+    }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+
+    public static void main(String[] args) {
+        new MouseEventDemo(); // Create an instance of the program
+    }
+}

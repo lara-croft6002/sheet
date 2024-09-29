@@ -1,0 +1,157 @@
+slip 13
+Q1
+// Base class: Continent
+class Continent {
+    private String name;
+
+    public Continent(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+// Intermediate class: Country
+class Country extends Continent {
+    private String countryName;
+
+    public Country(String continentName, String countryName) {
+        super(continentName);
+        this.countryName = countryName;
+    }
+
+    public String getCountryName() {
+        return countryName;
+    }
+}
+
+// Derived class: State
+class State extends Country {
+    private String stateName;
+    private String placeName;
+
+    public State(String continentName, String countryName, String stateName, String placeName) {
+        super(continentName, countryName);
+        this.stateName = stateName;
+        this.placeName = placeName;
+    }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    // Method to display details
+    public void displayDetails() {
+        System.out.println("Place: " + getPlaceName());
+        System.out.println("State: " + getStateName());
+        System.out.println("Country: " + getCountryName());
+        System.out.println("Continent: " + getName());
+    }
+}
+
+// Main class
+public class MultilevelInheritance {
+    public static void main(String[] args) {
+        // Create a State object
+        State state = new State("North America", "United States", "California", "Los Angeles");
+
+        // Display the details
+        state.displayDetails();
+    }
+}
+-----------------------------------------
+Q2
+import java.util.Scanner;
+
+public class MenuDrivenOperations {
+    // Method to calculate the volume of a cylinder
+    private static double calculateCylinderVolume(double radius, double height) {
+        return Math.PI * radius * radius * height;
+    }
+
+    // Method to find the factorial of a number
+    private static long factorial(int number) {
+        if (number < 0) {
+            return -1; // Factorial not defined for negative numbers
+        }
+        long result = 1;
+        for (int i = 1; i <= number; i++) {
+            result *= i;
+        }
+        return result;
+    }
+
+    // Method to check if a number is Armstrong
+    private static boolean isArmstrong(int number) {
+        int sum = 0, temp = number, digits = String.valueOf(number).length();
+        
+        while (temp != 0) {
+            int digit = temp % 10;
+            sum += Math.pow(digit, digits);
+            temp /= 10;
+        }
+        return sum == number;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Calculate the volume of a cylinder");
+            System.out.println("2. Find the factorial of a given number");
+            System.out.println("3. Check if a number is Armstrong");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice (1-4): ");
+            choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the radius of the cylinder: ");
+                    double radius = scanner.nextDouble();
+                    System.out.print("Enter the height of the cylinder: ");
+                    double height = scanner.nextDouble();
+                    double volume = calculateCylinderVolume(radius, height);
+                    System.out.printf("The volume of the cylinder is: %.2f\n", volume);
+                    break;
+
+                case 2:
+                    System.out.print("Enter a number to find its factorial: ");
+                    int number = scanner.nextInt();
+                    long factorialResult = factorial(number);
+                    if (factorialResult == -1) {
+                        System.out.println("Factorial not defined for negative numbers.");
+                    } else {
+                        System.out.println("The factorial of " + number + " is: " + factorialResult);
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Enter a number to check if it is Armstrong: ");
+                    int armstrongNumber = scanner.nextInt();
+                    if (isArmstrong(armstrongNumber)) {
+                        System.out.println(armstrongNumber + " is an Armstrong number.");
+                    } else {
+                        System.out.println(armstrongNumber + " is not an Armstrong number.");
+                    }
+                    break;
+
+                case 4:
+                    System.out.println("Exiting the program.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice. Please select again.");
+            }
+        } while (choice != 4);
+
+        scanner.close();
+    }
+}

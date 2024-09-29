@@ -1,0 +1,145 @@
+slip 9
+Q1
+import java.util.Arrays;
+
+public class SortFiveNumbers {
+    public static void main(String[] args) {
+        // Check if exactly 5 numbers are provided
+        if (args.length != 5) {
+            System.out.println("Please provide exactly 5 numbers as command line arguments.");
+            return;
+        }
+
+        // Convert command line arguments to an array of integers
+        int[] numbers = new int[5];
+        try {
+            for (int i = 0; i < args.length; i++) {
+                numbers[i] = Integer.parseInt(args[i]);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please ensure all arguments are valid integers.");
+            return;
+        }
+
+        // Sort the array
+        Arrays.sort(numbers);
+
+        // Display the sorted numbers
+        System.out.println("Sorted Numbers:");
+        for (int number : numbers) {
+            System.out.print(number + " ");
+        }
+    }
+}
+
+--------------------------------------------------
+Q2
+import java.util.Scanner;
+
+// Abstract class Order
+abstract class Order {
+    protected int id;
+    protected String description;
+
+    public Order(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
+    // Abstract methods to be implemented by subclasses
+    abstract void accept();
+    abstract void display();
+}
+
+// Subclass for Purchase Order
+class PurchaseOrder extends Order {
+    private String vendorName;
+
+    public PurchaseOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Vendor Name for Purchase Order (ID: " + id + "): ");
+        vendorName = scanner.nextLine();
+    }
+
+    @Override
+    void display() {
+        System.out.println("Purchase Order ID: " + id);
+        System.out.println("Description: " + description);
+        System.out.println("Vendor Name: " + vendorName);
+    }
+}
+
+// Subclass for Sales Order
+class SalesOrder extends Order {
+    private String customerName;
+
+    public SalesOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Customer Name for Sales Order (ID: " + id + "): ");
+        customerName = scanner.nextLine();
+    }
+
+    @Override
+    void display() {
+        System.out.println("Sales Order ID: " + id);
+        System.out.println("Description: " + description);
+        System.out.println("Customer Name: " + customerName);
+    }
+}
+
+// Main class
+public class OrderSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Create 3 Purchase Orders
+        PurchaseOrder[] purchaseOrders = new PurchaseOrder[3];
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter ID for Purchase Order " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter Description for Purchase Order " + (i + 1) + ": ");
+            String description = scanner.nextLine();
+            purchaseOrders[i] = new PurchaseOrder(id, description);
+            purchaseOrders[i].accept();
+        }
+
+        // Create 3 Sales Orders
+        SalesOrder[] salesOrders = new SalesOrder[3];
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter ID for Sales Order " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter Description for Sales Order " + (i + 1) + ": ");
+            String description = scanner.nextLine();
+            salesOrders[i] = new SalesOrder(id, description);
+            salesOrders[i].accept();
+        }
+
+        // Display Purchase Orders
+        System.out.println("\n--- Purchase Orders ---");
+        for (PurchaseOrder po : purchaseOrders) {
+            po.display();
+            System.out.println();
+        }
+
+        // Display Sales Orders
+        System.out.println("--- Sales Orders ---");
+        for (SalesOrder so : salesOrders) {
+            so.display();
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}

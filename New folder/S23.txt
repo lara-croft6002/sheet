@@ -1,0 +1,113 @@
+slip 23
+Q1
+import java.util.Scanner;
+
+public class RectangleAreaPerimeter {
+    public static void main(String[] args) {
+        // Create a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the length and breadth of the rectangle
+        System.out.print("Enter the length of the rectangle: ");
+        double length = scanner.nextDouble();
+
+        System.out.print("Enter the breadth of the rectangle: ");
+        double breadth = scanner.nextDouble();
+
+        // Calculate the area and perimeter
+        double area = length * breadth;
+        double perimeter = 2 * (length + breadth);
+
+        // Display the results
+        System.out.println("Area of the rectangle: " + area);
+        System.out.println("Perimeter of the rectangle: " + perimeter);
+
+        // Close the scanner
+        scanner.close();
+    }
+}
+----------------------------------------------------------
+Q2
+import java.util.Scanner;
+
+// Custom exception for invalid dates
+class InvalidDateException extends Exception {
+    public InvalidDateException(String message) {
+        super(message);
+    }
+}
+
+// Class to represent a date
+class MyDate {
+    private int day;
+    private int month;
+    private int year;
+
+    // Constructor
+    public MyDate(int day, int month, int year) throws InvalidDateException {
+        setDate(day, month, year);
+    }
+
+    // Method to set the date with validation
+    public void setDate(int day, int month, int year) throws InvalidDateException {
+        if (month < 1 || month > 12) {
+            throw new InvalidDateException("Invalid month! Month should be between 1 and 12.");
+        }
+
+        // Check if the day is valid for the given month and year
+        int maxDays = getMaxDaysInMonth(month, year);
+        if (day < 1 || day > maxDays) {
+            throw new InvalidDateException("Invalid day! Day should be between 1 and " + maxDays + " for month " + month + ".");
+        }
+
+        this.day = day;
+        this.month = month;
+        this.year = year;
+    }
+
+    // Method to get the maximum number of days in a month
+    private int getMaxDaysInMonth(int month, int year) {
+        switch (month) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                return 31;
+            case 4: case 6: case 9: case 11:
+                return 30;
+            case 2:
+                return (isLeapYear(year)) ? 29 : 28;
+            default:
+                return 0; // Should not reach here
+        }
+    }
+
+    // Method to check if a year is a leap year
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    // Method to display the date
+    public void display() {
+        System.out.printf("Date: %02d/%02d/%04d%n", day, month, year);
+    }
+}
+
+public class MyDateExample {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter date (dd mm yyyy): ");
+        
+        // Read day, month, and year
+        int day = scanner.nextInt();
+        int month = scanner.nextInt();
+        int year = scanner.nextInt();
+
+        try {
+            // Create MyDate object
+            MyDate date = new MyDate(day, month, year);
+            date.display(); // Display the valid date
+        } catch (InvalidDateException e) {
+            System.out.println(e.getMessage()); // Display the error message
+        } finally {
+            scanner.close(); // Close the scanner
+        }
+    }
+}

@@ -1,0 +1,125 @@
+slip 15
+Q1
+import java.util.Arrays;
+
+public class SortNumbers {
+    public static void main(String[] args) {
+        // Check if 5 numbers are provided
+        if (args.length != 5) {
+            System.out.println("Please provide exactly 5 numbers as command line arguments.");
+            return;
+        }
+
+        // Convert command line arguments to an array of integers
+        int[] numbers = new int[5];
+        try {
+            for (int i = 0; i < 5; i++) {
+                numbers[i] = Integer.parseInt(args[i]);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Please make sure all inputs are valid integers.");
+            return;
+        }
+
+        // Sort the array
+        Arrays.sort(numbers);
+
+        // Display the sorted numbers
+        System.out.println("Sorted Numbers: ");
+        for (int number : numbers) {
+            System.out.print(number + " ");
+        }
+    }
+}
+
+----------------------------------------------====
+Q2
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+import java.util.function.Function;
+
+// Functional interface to calculate cube
+@FunctionalInterface
+interface CubeCalculator {
+    int cube(int number);
+}
+
+// Class to represent a cricket player
+class CricketPlayer {
+    String name;
+    int no_of_innings;
+    int no_of_times_notout;
+    int totalRuns;
+    double bat_avg;
+
+    // Constructor to initialize player details
+    public CricketPlayer(String name, int no_of_innings, int no_of_times_notout, int totalRuns) {
+        this.name = name;
+        this.no_of_innings = no_of_innings;
+        this.no_of_times_notout = no_of_times_notout;
+        this.totalRuns = totalRuns;
+        this.bat_avg = calculateAverage();
+    }
+
+    // Method to calculate batting average
+    private double calculateAverage() {
+        return (double) totalRuns / no_of_innings;
+    }
+
+    // Method to get player details
+    @Override
+    public String toString() {
+        return String.format("Name: %s, Innings: %d, Not Out: %d, Total Runs: %d, Batting Average: %.2f",
+                name, no_of_innings, no_of_times_notout, totalRuns, bat_avg);
+    }
+}
+
+public class CricketPlayerAndCube {
+    // Static method to sort players by batting average
+    public static void sortPlayersByAverage(CricketPlayer[] players) {
+        Arrays.sort(players, Comparator.comparingDouble(player -> player.bat_avg));
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accepting number of players
+        System.out.print("Enter the number of players: ");
+        int n = scanner.nextInt();
+        CricketPlayer[] players = new CricketPlayer[n];
+
+        // Input player details
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter name of player " + (i + 1) + ": ");
+            String name = scanner.next();
+            System.out.print("Enter number of innings: ");
+            int innings = scanner.nextInt();
+            System.out.print("Enter number of times not out: ");
+            int notOut = scanner.nextInt();
+            System.out.print("Enter total runs: ");
+            int totalRuns = scanner.nextInt();
+            players[i] = new CricketPlayer(name, innings, notOut, totalRuns);
+        }
+
+        // Sort players by batting average
+        sortPlayersByAverage(players);
+
+        // Display sorted player details
+        System.out.println("\nPlayers sorted by batting average:");
+        for (CricketPlayer player : players) {
+            System.out.println(player);
+        }
+
+        // Using the functional interface to calculate cube
+        CubeCalculator calculator = (number) -> number * number * number;
+
+        // Get a number to calculate its cube
+        System.out.print("\nEnter a number to calculate its cube: ");
+        int number = scanner.nextInt();
+        int cubeResult = calculator.cube(number);
+        System.out.println("The cube of " + number + " is: " + cubeResult);
+
+        scanner.close();
+    }
+}

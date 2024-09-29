@@ -1,0 +1,90 @@
+slip 25
+Q1
+import java.util.Scanner;
+
+public class RectangleCalculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user for length and breadth
+        System.out.print("Enter the length of the rectangle: ");
+        double length = scanner.nextDouble();
+
+        System.out.print("Enter the breadth of the rectangle: ");
+        double breadth = scanner.nextDouble();
+
+        // Calculate area and perimeter
+        double area = calculateArea(length, breadth);
+        double perimeter = calculatePerimeter(length, breadth);
+
+        // Display the results
+        System.out.println("Area of the rectangle: " + area);
+        System.out.println("Perimeter of the rectangle: " + perimeter);
+
+        // Close the scanner
+        scanner.close();
+    }
+
+    // Method to calculate area
+    public static double calculateArea(double length, double breadth) {
+        return length * breadth;
+    }
+
+    // Method to calculate perimeter
+    public static double calculatePerimeter(double length, double breadth) {
+        return 2 * (length + breadth);
+    }
+}
+
+-----------------------------------------------------------------------------
+Q2
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+public class MouseEventExample extends JFrame {
+    private JTextField textField;
+
+    public MouseEventExample() {
+        // Set up the frame
+        setTitle("Mouse Event Example");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        // Create a text field to display mouse position
+        textField = new JTextField(20);
+        textField.setEditable(false);
+        add(textField);
+
+        // Add mouse listener to the frame
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Get the mouse position and display it in the text field
+                int x = e.getX();
+                int y = e.getY();
+                textField.setText("Mouse Clicked at: (" + x + ", " + y + ")");
+            }
+        });
+
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                // Get the mouse position and display it in the text field
+                int x = e.getX();
+                int y = e.getY();
+                textField.setText("Mouse Moved at: (" + x + ", " + y + ")");
+            }
+        });
+
+        // Set visibility
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        // Create the frame
+        new MouseEventExample();
+    }
+}

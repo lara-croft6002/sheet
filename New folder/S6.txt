@@ -1,0 +1,168 @@
+slip 6
+Q1
+
+import java.util.Arrays;
+
+public class SortNumbers {
+    public static void main(String[] args) {
+        // Check if exactly 5 arguments are provided
+        if (args.length != 5) {
+            System.out.println("Please provide exactly 5 numbers as command line arguments.");
+            return;
+        }
+
+        try {
+            // Convert command line arguments to integers
+            int[] numbers = new int[5];
+            for (int i = 0; i < 5; i++) {
+                numbers[i] = Integer.parseInt(args[i]);
+            }
+
+            // Sort the array
+            Arrays.sort(numbers);
+
+            // Display the sorted numbers
+            System.out.println("Sorted numbers: " + Arrays.toString(numbers));
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please ensure all arguments are valid integers.");
+        }
+    }
+}
+
+-------------------------------------------------
+Q2
+import java.util.Scanner;
+
+public class MatrixOperations {
+    
+    private static Scanner scanner = new Scanner(System.in);
+    
+    public static void main(String[] args) {
+        int choice;
+        
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Matrix Addition");
+            System.out.println("2. Matrix Multiplication");
+            System.out.println("3. Transpose of a Matrix");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    matrixAddition();
+                    break;
+                case 2:
+                    matrixMultiplication();
+                    break;
+                case 3:
+                    transposeMatrix();
+                    break;
+                case 4:
+                    System.out.println("Exiting the program.");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
+        } while (choice != 4);
+        
+        scanner.close();
+    }
+    
+    private static void matrixAddition() {
+        System.out.print("Enter the number of rows and columns for the matrices: ");
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        
+        int[][] matrix1 = new int[rows][cols];
+        int[][] matrix2 = new int[rows][cols];
+        int[][] result = new int[rows][cols];
+
+        System.out.println("Enter elements of first matrix:");
+        fillMatrix(matrix1);
+        
+        System.out.println("Enter elements of second matrix:");
+        fillMatrix(matrix2);
+
+        // Addition
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+
+        System.out.println("Resultant Matrix after Addition:");
+        printMatrix(result);
+    }
+
+    private static void matrixMultiplication() {
+        System.out.print("Enter number of rows and columns for first matrix: ");
+        int rows1 = scanner.nextInt();
+        int cols1 = scanner.nextInt();
+        
+        System.out.print("Enter number of columns for second matrix (rows for first matrix must equal columns for second matrix): ");
+        int cols2 = scanner.nextInt();
+
+        int[][] matrix1 = new int[rows1][cols1];
+        int[][] matrix2 = new int[cols1][cols2];
+        int[][] result = new int[rows1][cols2];
+
+        System.out.println("Enter elements of first matrix:");
+        fillMatrix(matrix1);
+        
+        System.out.println("Enter elements of second matrix:");
+        fillMatrix(matrix2);
+
+        // Multiplication
+        for (int i = 0; i < rows1; i++) {
+            for (int j = 0; j < cols2; j++) {
+                for (int k = 0; k < cols1; k++) {
+                    result[i][j] += matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+
+        System.out.println("Resultant Matrix after Multiplication:");
+        printMatrix(result);
+    }
+
+    private static void transposeMatrix() {
+        System.out.print("Enter the number of rows and columns for the matrix: ");
+        int rows = scanner.nextInt();
+        int cols = scanner.nextInt();
+        
+        int[][] matrix = new int[rows][cols];
+        int[][] transposed = new int[cols][rows];
+
+        System.out.println("Enter elements of the matrix:");
+        fillMatrix(matrix);
+
+        // Transpose
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                transposed[j][i] = matrix[i][j];
+            }
+        }
+
+        System.out.println("Transposed Matrix:");
+        printMatrix(transposed);
+    }
+
+    private static void fillMatrix(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+    }
+
+    private static void printMatrix(int[][] matrix) {
+        for (int[] row : matrix) {
+            for (int element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
+    }
+}

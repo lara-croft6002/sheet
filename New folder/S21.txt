@@ -1,0 +1,182 @@
+slip 21
+Q1
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Abstract class Staff
+abstract class Staff {
+    protected int id;
+    protected String name;
+
+    // Parameterized constructor
+    public Staff(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+// Subclass OfficeStaff extending Staff
+class OfficeStaff extends Staff {
+    private String department;
+
+    // Constructor
+    public OfficeStaff(int id, String name, String department) {
+        super(id, name); // Call to the parent constructor
+        this.department = department;
+    }
+
+    // Method to display staff details
+    public void displayDetails() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + department);
+        System.out.println();
+    }
+}
+
+// Main class to manage OfficeStaff objects
+public class StaffManagement {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<OfficeStaff> staffList = new ArrayList<>();
+
+        System.out.print("Enter the number of Office Staff members: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Create n OfficeStaff objects
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter ID for staff member " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            System.out.print("Enter Name for staff member " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Department for staff member " + (i + 1) + ": ");
+            String department = scanner.nextLine();
+
+            // Create OfficeStaff object and add to the list
+            OfficeStaff officeStaff = new OfficeStaff(id, name, department);
+            staffList.add(officeStaff);
+        }
+
+        // Display details of all OfficeStaff members
+        System.out.println("\nDetails of Office Staff Members:");
+        for (OfficeStaff staff : staffList) {
+            staff.displayDetails();
+        }
+
+        scanner.close();
+    }
+}
+ 
+ -------------------------------------------------------
+Q2
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Scanner;
+
+class Book {
+    int bookId;
+    String bookName;
+    double bookPrice;
+    int bookQty;
+
+    // Constructor
+    public Book(int bookId, String bookName, double bookPrice, int bookQty) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookPrice = bookPrice;
+        this.bookQty = bookQty;
+    }
+
+    // Method to write book information to a RandomAccessFile
+    public void writeToFile(RandomAccessFile file) throws IOException {
+        file.writeInt(bookId);
+        file.writeUTF(bookName);
+        file.writeDouble(bookPrice);
+        file.writeInt(bookQty);
+    }
+
+    // Method to read book information from a RandomAccessFile
+    public static Book readFromFile(RandomAccessFile file) throws IOException {
+        int id = file.readInt();
+        String name = file.readUTF();
+        double price = file.readDouble();
+        int qty = file.readInt();
+        return new Book(id, name, price, qty);
+    }
+
+    // Method to display book information
+    public void display() {
+        System.out.println("Book ID: " + bookId);
+        System.out.println("Book Name: " + bookName);
+        System.out.println("Book Price: " + bookPrice);
+        System.out.println("Book Quantity: " + bookQty);
+        System.out.println();
+    }
+}
+
+public class BookManagement {
+    private static final String FILE_NAME = "book.dat";
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Menu:");
+            System.out.println("1. Add Book");
+            System.out.println("2. Display All Books");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    // Add a new book
+                    System.out.print("Enter Book ID: ");
+                    int bookId = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    System.out.print("Enter Book Name: ");
+                    String bookName = scanner.nextLine();
+                    System.out.print("Enter Book Price: ");
+                    double bookPrice = scanner.nextDouble();
+                    System.out.print("Enter Book Quantity: ");
+                    int bookQty = scanner.nextInt();
+
+                    // Write book information to file
+                    try (RandomAccessFile file = new RandomAccessFile(FILE_NAME, "rw")) {
+                        file.seek(file.length()); // Move to the end of the file
+                        new Book(bookId, bookName, bookPrice, bookQty).writeToFile(file);
+                    } catch (IOException e) {
+                        System.out.println("Error writing to file: " + e.getMessage());
+                    }
+                    break;
+
+                case 2:
+                    // Display all books
+                    try (RandomAccessFile file = new RandomAccessFile(FILE_NAME, "r")) {
+                        System.out.println("Books in the database:");
+                        while (file.getFilePointer() < file.length()) {
+                            Book book = Book.readFromFile(file);
+                            book.display();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Error reading from file: " + e.getMessage());
+                    }
+                    break;
+
+                case 3:
+                    // Exit the program
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+}

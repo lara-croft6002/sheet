@@ -1,0 +1,124 @@
+slip 27
+Q1
+import java.util.Scanner;
+
+public class ReverseArray {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user for the number of elements
+        System.out.print("Enter the number of elements in the array: ");
+        int n = scanner.nextInt();
+
+        // Create an array to hold the elements
+        int[] array = new int[n];
+
+        // Accept the elements from the user
+        System.out.println("Enter the elements of the array:");
+        for (int i = 0; i < n; i++) {
+            System.out.print("Element " + (i + 1) + ": ");
+            array[i] = scanner.nextInt();
+        }
+
+        // Display the elements in reverse order
+        System.out.println("Array elements in reverse order:");
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.print(array[i] + " ");
+        }
+
+        // Close the scanner
+        scanner.close();
+    }
+}
+------------------------------------------------------------------------
+Q2
+import java.awt.*;
+import java.awt.event.*;
+
+class LoginException extends Exception {
+    public LoginException(String message) {
+        super(message);
+    }
+}
+
+public class LoginScreen extends Frame implements ActionListener {
+    private TextField usernameField;
+    private TextField passwordField;
+    private Label messageLabel;
+    private int loginAttempts = 3;
+
+    public LoginScreen() {
+        // Create UI components
+        Label usernameLabel = new Label("Username:");
+        Label passwordLabel = new Label("Password:");
+        
+        usernameField = new TextField();
+        passwordField = new TextField();
+        passwordField.setEchoChar('*'); // Mask password input
+        
+        Button loginButton = new Button("Login");
+        Button clearButton = new Button("Clear");
+        
+        messageLabel = new Label("");
+
+        // Set layout
+        setLayout(new GridLayout(5, 2));
+        
+        // Add components to the frame
+        add(usernameLabel);
+        add(usernameField);
+        add(passwordLabel);
+        add(passwordField);
+        add(loginButton);
+        add(clearButton);
+        add(messageLabel);
+
+        // Add action listeners
+        loginButton.addActionListener(this);
+        clearButton.addActionListener(e -> clearFields());
+
+        // Frame settings
+        setTitle("Login Screen");
+        setSize(300, 200);
+        setVisible(true);
+        setLocationRelativeTo(null); // Center the window
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        try {
+            if (!username.equals(password)) {
+                throw new LoginException("Username and Password do not match.");
+            } else {
+                messageLabel.setText("Login Successful!");
+                // Optionally reset attempts or perform further actions
+            }
+        } catch (LoginException ex) {
+            loginAttempts--;
+            messageLabel.setText(ex.getMessage() + " Attempts left: " + loginAttempts);
+            if (loginAttempts <= 0) {
+                messageLabel.setText("Login attempts exceeded. Exiting.");
+                System.exit(0);
+            }
+        }
+    }
+
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
+        messageLabel.setText("");
+        loginAttempts = 3; // Reset attempts when cleared
+    }
+
+    public static void main(String[] args) {
+        new LoginScreen();
+    }
+}

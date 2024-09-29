@@ -1,0 +1,107 @@
+slip 26
+Q1
+import java.util.Scanner;
+
+// Functional interface
+@FunctionalInterface
+interface CubeCalculator {
+    double calculateCube(double number);
+}
+
+public class CubeCalculatorExample {
+    public static void main(String[] args) {
+        // Create a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter a number
+        System.out.print("Enter a number to find its cube: ");
+        double number = scanner.nextDouble();
+
+        // Lambda expression to calculate the cube
+        CubeCalculator cubeCalculator = (num) -> num * num * num;
+
+        // Calculate the cube using the functional interface
+        double cube = cubeCalculator.calculateCube(number);
+
+        // Display the result
+        System.out.println("The cube of " + number + " is: " + cube);
+
+        // Close the scanner
+        scanner.close();
+    }
+}
+
+-------------------------------------------------------------------------------
+Q2
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class UserInputForm extends JFrame {
+    private JTextField nameField;
+    private JTextField classField;
+    private JTextArea outputArea;
+    private JList<String> hobbiesList;
+
+    public UserInputForm() {
+        // Set up the frame
+        setTitle("User Input Form");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(5, 2)); // 5 rows and 2 columns
+
+        // Create components
+        JLabel nameLabel = new JLabel("Name:");
+        nameField = new JTextField();
+
+        JLabel classLabel = new JLabel("Class:");
+        classField = new JTextField();
+
+        JLabel hobbiesLabel = new JLabel("Hobbies:");
+        String[] hobbies = {"Reading", "Traveling", "Gaming", "Sports", "Music"};
+        hobbiesList = new JList<>(hobbies);
+        hobbiesList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane hobbiesScroll = new JScrollPane(hobbiesList);
+
+        JButton submitButton = new JButton("Submit");
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+
+        // Add components to the frame
+        add(nameLabel);
+        add(nameField);
+        add(classLabel);
+        add(classField);
+        add(hobbiesLabel);
+        add(hobbiesScroll);
+        add(submitButton);
+        add(new JLabel("Output:")); // For better layout
+        add(new JScrollPane(outputArea));
+
+        // Add action listener to the button
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameField.getText();
+                String userClass = classField.getText();
+                List<String> selectedHobbies = hobbiesList.getSelectedValuesList();
+
+                // Prepare output
+                StringBuilder output = new StringBuilder("Name: " + name + "\n");
+                output.append("Class: " + userClass + "\n");
+                output.append("Hobbies: " + String.join(", ", selectedHobbies));
+
+                // Display output in the text area
+                outputArea.setText(output.toString());
+            }
+        });
+
+        // Set visibility
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new UserInputForm();
+    }
+}

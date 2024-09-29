@@ -1,0 +1,75 @@
+slip 20
+Q1
+import java.util.Scanner;
+
+public class ReverseArray {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Accept the size of the array
+        System.out.print("Enter the number of elements in the array: ");
+        int n = scanner.nextInt();
+        
+        // Create an array of size n
+        int[] array = new int[n];
+        
+        // Accept array elements from the user
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+        
+        // Display the array in reverse order
+        System.out.println("Array in reverse order:");
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.print(array[i] + " ");
+        }
+        
+        scanner.close();
+    }
+}
+
+--------------------------------------------------
+Q2
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class FileCopyWithComment {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accept file names from the user
+        System.out.print("Enter the name of the source file (e.g., source.txt): ");
+        String sourceFile = scanner.nextLine();
+        System.out.print("Enter the name of the destination file (e.g., destination.txt): ");
+        String destinationFile = scanner.nextLine();
+
+        // Copy contents from source file to destination file
+        try (BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(destinationFile))) {
+
+            String line;
+
+            // Read each line from the source file and write it to the destination file
+            while ((line = reader.readLine()) != null) {
+                writer.write(line);
+                writer.newLine(); // Write a new line
+            }
+
+            // Write the comment at the end of the destination file
+            writer.write("end of file");
+            writer.newLine(); // Optional, for a cleaner format
+
+            System.out.println("Contents copied successfully and 'end of file' added.");
+
+        } catch (IOException e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}

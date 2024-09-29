@@ -1,0 +1,130 @@
+slip 18
+Q1
+// Employee class definition
+class Employee {
+    private int id;
+    private String name;
+    private String deptName;
+    private double salary;
+
+    // Static variable to keep count of Employee objects
+    private static int count = 0;
+
+    // Default constructor
+    public Employee() {
+        this.id = 0;
+        this.name = "Unknown";
+        this.deptName = "Unknown";
+        this.salary = 0.0;
+        count++;
+    }
+
+    // Parameterized constructor
+    public Employee(int id, String name, String deptName, double salary) {
+        this.id = id;
+        this.name = name;
+        this.deptName = deptName;
+        this.salary = salary;
+        count++;
+    }
+
+    // Method to display employee details
+    public void display() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + deptName);
+        System.out.println("Salary: " + salary);
+        System.out.println();
+    }
+
+    // Static method to get the count of Employee objects
+    public static int getCount() {
+        return count;
+    }
+}
+
+// Main class to manage employees
+public class EmployeeManager {
+    public static void main(String[] args) {
+        // Create Employee objects using parameterized constructor
+        Employee emp1 = new Employee(101, "Alice", "HR", 50000);
+        Employee emp2 = new Employee(102, "Bob", "IT", 60000);
+        Employee emp3 = new Employee(103, "Charlie", "Finance", 55000);
+
+        // Display employee details
+        System.out.println("Employee Details:");
+        emp1.display();
+        emp2.display();
+        emp3.display();
+
+        // Display the object count
+        System.out.println("Total number of Employee objects created: " + Employee.getCount());
+    }
+}
+
+------------------------------------------------------------
+Q2
+// Custom Exception Class
+class CovidPositiveException extends Exception {
+    public CovidPositiveException(String message) {
+        super(message);
+    }
+}
+
+// Patient class definition
+class Patient {
+    private String patientName;
+    private int patientAge;
+    private double patientOxyLevel;
+    private double patientHRCTReport;
+
+    // Constructor
+    public Patient(String patientName, int patientAge, double patientOxyLevel, double patientHRCTReport) {
+        this.patientName = patientName;
+        this.patientAge = patientAge;
+        this.patientOxyLevel = patientOxyLevel;
+        this.patientHRCTReport = patientHRCTReport;
+    }
+
+    // Method to check patient status
+    public void checkPatientStatus() throws CovidPositiveException {
+        if (patientOxyLevel < 95.0 || patientHRCTReport > 10.0) {
+            throw new CovidPositiveException("Patient is Covid Positive(+) and Need to Hospitalized");
+        } else {
+            displayInfo();
+        }
+    }
+
+    // Method to display patient information
+    public void displayInfo() {
+        System.out.println("Patient Name: " + patientName);
+        System.out.println("Patient Age: " + patientAge);
+        System.out.println("Oxygen Level: " + patientOxyLevel + "%");
+        System.out.println("HRCT Report Score: " + patientHRCTReport);
+    }
+}
+
+// Main class to manage patients
+public class PatientManager {
+    public static void main(String[] args) {
+        // Create a patient object
+        Patient patient1 = new Patient("John Doe", 30, 94.0, 11.0); // Example of Covid Positive condition
+
+        try {
+            // Check patient status
+            patient1.checkPatientStatus();
+        } catch (CovidPositiveException e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Create another patient object
+        Patient patient2 = new Patient("Jane Smith", 28, 97.0, 8.0); // Normal condition
+
+        try {
+            // Check patient status
+            patient2.checkPatientStatus();
+        } catch (CovidPositiveException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}

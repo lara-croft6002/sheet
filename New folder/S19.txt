@@ -1,0 +1,113 @@
+slip 19
+Q1
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class FileReverseAndUppercase {
+    public static void main(String[] args) {
+        String fileName = "sample.txt";
+        ArrayList<String> lines = new ArrayList<>();
+
+        // Reading the file and storing its contents
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+            return;
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+            return;
+        }
+
+        // Display original contents in uppercase
+        System.out.println("Original Contents in Uppercase:");
+        for (String line : lines) {
+            System.out.println(line.toUpperCase());
+        }
+
+        // Display contents in reverse order
+        System.out.println("\nContents in Reverse Order:");
+        for (int i = lines.size() - 1; i >= 0; i--) {
+            System.out.println(lines.get(i));
+        }
+    }
+}
+
+-----------------------------------------------------------------------
+Q2
+import java.util.ArrayList;
+import java.util.Scanner;
+
+// Abstract class Staff
+abstract class Staff {
+    protected int id;
+    protected String name;
+
+    // Parameterized constructor
+    public Staff(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+
+// Subclass OfficeStaff extending Staff
+class OfficeStaff extends Staff {
+    private String department;
+
+    // Constructor
+    public OfficeStaff(int id, String name, String department) {
+        super(id, name); // Call to the parent constructor
+        this.department = department;
+    }
+
+    // Method to display staff details
+    public void displayDetails() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Department: " + department);
+        System.out.println();
+    }
+}
+
+// Main class to manage OfficeStaff objects
+public class StaffManagement {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<OfficeStaff> staffList = new ArrayList<>();
+
+        System.out.print("Enter the number of Office Staff members: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        // Create n OfficeStaff objects
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter ID for staff member " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            System.out.print("Enter Name for staff member " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Department for staff member " + (i + 1) + ": ");
+            String department = scanner.nextLine();
+
+            // Create OfficeStaff object and add to the list
+            OfficeStaff officeStaff = new OfficeStaff(id, name, department);
+            staffList.add(officeStaff);
+        }
+
+        // Display details of all OfficeStaff members
+        System.out.println("\nDetails of Office Staff Members:");
+        for (OfficeStaff staff : staffList) {
+            staff.displayDetails();
+        }
+
+        scanner.close();
+    }
+}

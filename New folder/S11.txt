@@ -1,0 +1,152 @@
+slip 11
+Q1
+import java.util.Scanner;
+
+public class RectangleAreaPerimeter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter length and breadth
+        System.out.print("Enter the length of the rectangle: ");
+        double length = scanner.nextDouble();
+        
+        System.out.print("Enter the breadth of the rectangle: ");
+        double breadth = scanner.nextDouble();
+
+        // Calculate area and perimeter
+        double area = length * breadth; // Area = length * breadth
+        double perimeter = 2 * (length + breadth); // Perimeter = 2 * (length + breadth)
+
+        // Display the results
+        System.out.printf("Area of the rectangle: %.2f%n", area);
+        System.out.printf("Perimeter of the rectangle: %.2f%n", perimeter);
+
+        scanner.close();
+    }
+}
+
+----------------------------------------------------
+Q2
+import java.util.Scanner;
+
+// SYMarks class
+class SYMarks {
+    private int computerTotal;
+    private int mathsTotal;
+    private int electronicsTotal;
+
+    public SYMarks(int computerTotal, int mathsTotal, int electronicsTotal) {
+        this.computerTotal = computerTotal;
+        this.mathsTotal = mathsTotal;
+        this.electronicsTotal = electronicsTotal;
+    }
+
+    public int getComputerTotal() {
+        return computerTotal;
+    }
+
+    public int getMathsTotal() {
+        return mathsTotal;
+    }
+
+    public int getElectronicsTotal() {
+        return electronicsTotal;
+    }
+}
+
+// TYMarks class
+class TYMarks {
+    private int theory;
+    private int practicals;
+
+    public TYMarks(int theory, int practicals) {
+        this.theory = theory;
+        this.practicals = practicals;
+    }
+
+    public int getTheory() {
+        return theory;
+    }
+
+    public int getPracticals() {
+        return practicals;
+    }
+}
+
+// Student class
+class Student {
+    private int rollNumber;
+    private String name;
+    private SYMarks syMarks;
+    private TYMarks tyMarks;
+
+    public Student(int rollNumber, String name, SYMarks syMarks, TYMarks tyMarks) {
+        this.rollNumber = rollNumber;
+        this.name = name;
+        this.syMarks = syMarks;
+        this.tyMarks = tyMarks;
+    }
+
+    public String calculateGrade() {
+        int totalComputerMarks = syMarks.getComputerTotal() + tyMarks.getTheory();
+        if (totalComputerMarks >= 70) {
+            return "A";
+        } else if (totalComputerMarks >= 60) {
+            return "B";
+        } else if (totalComputerMarks >= 50) {
+            return "C";
+        } else if (totalComputerMarks >= 40) {
+            return "Pass Class";
+        } else {
+            return "FAIL";
+        }
+    }
+
+    public void displayResult() {
+        System.out.println("Student Name: " + name);
+        System.out.println("Roll Number: " + rollNumber);
+        System.out.println("SY Computer Marks: " + syMarks.getComputerTotal());
+        System.out.println("TY Theory Marks: " + tyMarks.getTheory());
+        System.out.println("Grade: " + calculateGrade());
+    }
+}
+
+// Main class
+public class StudentGrades {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input for SY Marks
+        System.out.print("Enter SY Computer Marks: ");
+        int syComputerMarks = scanner.nextInt();
+        System.out.print("Enter SY Maths Marks: ");
+        int syMathsMarks = scanner.nextInt();
+        System.out.print("Enter SY Electronics Marks: ");
+        int syElectronicsMarks = scanner.nextInt();
+
+        // Input for TY Marks
+        System.out.print("Enter TY Theory Marks: ");
+        int tyTheoryMarks = scanner.nextInt();
+        System.out.print("Enter TY Practical Marks: ");
+        int tyPracticalsMarks = scanner.nextInt();
+
+        // Input for Student details
+        System.out.print("Enter Roll Number: ");
+        int rollNumber = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter Student Name: ");
+        String name = scanner.nextLine();
+
+        // Create objects of SYMarks and TYMarks
+        SYMarks syMarks = new SYMarks(syComputerMarks, syMathsMarks, syElectronicsMarks);
+        TYMarks tyMarks = new TYMarks(tyTheoryMarks, tyPracticalsMarks);
+
+        // Create a Student object
+        Student student = new Student(rollNumber, name, syMarks, tyMarks);
+
+        // Display the result
+        student.displayResult();
+
+        scanner.close();
+    }
+}

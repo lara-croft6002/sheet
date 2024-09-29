@@ -1,0 +1,194 @@
+slip 16
+Q1
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Student {
+    private int roll_no;
+    private String name;
+    private double percentage;
+
+    // Constructor
+    public Student(int roll_no, String name, double percentage) {
+        this.roll_no = roll_no;
+        this.name = name;
+        this.percentage = percentage;
+    }
+
+    // Getters for the attributes
+    public int getRollNo() {
+        return roll_no;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPercentage() {
+        return percentage;
+    }
+
+    // Method to display student details
+    @Override
+    public String toString() {
+        return "Roll No: " + roll_no + ", Name: " + name + ", Percentage: " + percentage;
+    }
+
+    // Static method to sort students by percentage
+    public static void sortStudents(Student[] students) {
+        Arrays.sort(students, Comparator.comparingDouble(Student::getPercentage).reversed());
+    }
+}
+
+public class StudentSorting {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accept number of students
+        System.out.print("Enter the number of students: ");
+        int n = scanner.nextInt();
+        Student[] students = new Student[n];
+
+        // Accept details for each student
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter roll number for student " + (i + 1) + ": ");
+            int roll_no = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter name for student " + (i + 1) + ": ");
+            String name = scanner.nextLine();
+            System.out.print("Enter percentage for student " + (i + 1) + ": ");
+            double percentage = scanner.nextDouble();
+
+            students[i] = new Student(roll_no, name, percentage);
+        }
+
+        // Sort the students by percentage
+        Student.sortStudents(students);
+
+        // Display the sorted students
+        System.out.println("\nStudents sorted by percentage (highest to lowest):");
+        for (Student student : students) {
+            System.out.println(student);
+        }
+
+        scanner.close();
+    }
+}
+
+----------------------------------------------------------------
+Q2
+import java.util.Scanner;
+
+// Abstract class Order
+abstract class Order {
+    protected int id;
+    protected String description;
+
+    // Constructor
+    public Order(int id, String description) {
+        this.id = id;
+        this.description = description;
+    }
+
+    // Abstract methods to be implemented by subclasses
+    public abstract void accept();
+    public abstract void display();
+}
+
+// Subclass PurchaseOrder
+class PurchaseOrder extends Order {
+    private String customerName;
+
+    public PurchaseOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    public void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter customer name for Purchase Order ID " + id + ": ");
+        customerName = scanner.nextLine();
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Purchase Order ID: " + id);
+        System.out.println("Description: " + description);
+        System.out.println("Customer Name: " + customerName);
+    }
+}
+
+// Subclass SalesOrder
+class SalesOrder extends Order {
+    private String vendorName;
+
+    public SalesOrder(int id, String description) {
+        super(id, description);
+    }
+
+    @Override
+    public void accept() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter vendor name for Sales Order ID " + id + ": ");
+        vendorName = scanner.nextLine();
+    }
+
+    @Override
+    public void display() {
+        System.out.println("Sales Order ID: " + id);
+        System.out.println("Description: " + description);
+        System.out.println("Vendor Name: " + vendorName);
+    }
+}
+
+// Main class to run the program
+public class OrderSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Create arrays to hold orders
+        PurchaseOrder[] purchaseOrders = new PurchaseOrder[3];
+        SalesOrder[] salesOrders = new SalesOrder[3];
+
+        // Accept details for Purchase Orders
+        System.out.println("Enter details for 3 Purchase Orders:");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter ID for Purchase Order " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter description for Purchase Order " + (i + 1) + ": ");
+            String description = scanner.nextLine();
+            purchaseOrders[i] = new PurchaseOrder(id, description);
+            purchaseOrders[i].accept();
+        }
+
+        // Accept details for Sales Orders
+        System.out.println("\nEnter details for 3 Sales Orders:");
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter ID for Sales Order " + (i + 1) + ": ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.print("Enter description for Sales Order " + (i + 1) + ": ");
+            String description = scanner.nextLine();
+            salesOrders[i] = new SalesOrder(id, description);
+            salesOrders[i].accept();
+        }
+
+        // Display Purchase Orders
+        System.out.println("\nPurchase Orders:");
+        for (PurchaseOrder order : purchaseOrders) {
+            order.display();
+            System.out.println();
+        }
+
+        // Display Sales Orders
+        System.out.println("Sales Orders:");
+        for (SalesOrder order : salesOrders) {
+            order.display();
+            System.out.println();
+        }
+
+        scanner.close();
+    }
+}

@@ -1,0 +1,97 @@
+slip 17
+Q1
+import java.util.Scanner;
+
+public class ReverseArray {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Accept the size of the array
+        System.out.print("Enter the number of elements in the array: ");
+        int n = scanner.nextInt();
+
+        // Create an array of size n
+        int[] array = new int[n];
+
+        // Accept array elements
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            array[i] = scanner.nextInt();
+        }
+
+        // Display the elements in reverse order
+        System.out.println("Array elements in reverse order:");
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.print(array[i] + " ");
+        }
+
+        scanner.close();
+    }
+}
+
+--------------------------------------------------
+Q2
+// Marker Interface
+interface ProductMarker { }
+
+// Product class implementing the marker interface
+class Product implements ProductMarker {
+    private int product_id;
+    private String product_name;
+    private double product_cost;
+    private int product_quantity;
+
+    // Static variable to count the number of Product objects
+    private static int count = 0;
+
+    // Default constructor
+    public Product() {
+        product_id = 0;
+        product_name = "Unknown";
+        product_cost = 0.0;
+        product_quantity = 0;
+        count++;
+    }
+
+    // Parameterized constructor
+    public Product(int product_id, String product_name, double product_cost, int product_quantity) {
+        this.product_id = product_id;
+        this.product_name = product_name;
+        this.product_cost = product_cost;
+        this.product_quantity = product_quantity;
+        count++;
+    }
+
+    // Method to display product details
+    public void display() {
+        System.out.println("Product ID: " + product_id);
+        System.out.println("Product Name: " + product_name);
+        System.out.println("Product Cost: " + product_cost);
+        System.out.println("Product Quantity: " + product_quantity);
+        System.out.println();
+    }
+
+    // Static method to get the count of Product objects
+    public static int getCount() {
+        return count;
+    }
+}
+
+// Main class to manage products
+public class ProductManager {
+    public static void main(String[] args) {
+        // Create product objects
+        Product product1 = new Product(); // Using default constructor
+        Product product2 = new Product(101, "Laptop", 750.00, 5); // Using parameterized constructor
+        Product product3 = new Product(102, "Smartphone", 300.00, 10); // Using parameterized constructor
+
+        // Display product details
+        System.out.println("Product Details:");
+        product1.display();
+        product2.display();
+        product3.display();
+
+        // Display the object count
+        System.out.println("Total number of Product objects created: " + Product.getCount());
+    }
+}

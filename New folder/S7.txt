@@ -1,0 +1,157 @@
+slip 7
+Q1
+class Employee {
+    private int id;
+    private String name;
+    private String deptName;
+    private double salary;
+    
+    // Static variable to keep track of the number of Employee objects created
+    private static int objectCount = 0;
+
+    /**
+     * Default constructor
+     */
+    public Employee() {
+        this.id = 0;
+        this.name = "Unknown";
+        this.deptName = "Unknown";
+        this.salary = 0.0;
+        objectCount++;
+        displayObjectCount();
+    }
+
+    /**
+     * Parameterized constructor
+     * 
+     * @param id       Employee ID
+     * @param name     Employee name
+     * @param deptName Department name
+     * @param salary   Employee salary
+     */
+    public Employee(int id, String name, String deptName, double salary) {
+        this.id = id;
+        this.name = name;
+        this.deptName = deptName;
+        this.salary = salary;
+        objectCount++;
+        displayObjectCount();
+    }
+
+    /**
+     * Static method to display the current count of Employee objects created
+     */
+    public static void displayObjectCount() {
+        System.out.println("Current number of Employee objects created: " + objectCount);
+    }
+
+    /**
+     * Method to display the contents of the Employee object
+     */
+    public void displayInfo() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Employee Name: " + name);
+        System.out.println("Department Name: " + deptName);
+        System.out.println("Salary: " + salary);
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        // Create Employee objects using the parameterized constructor
+        Employee emp1 = new Employee(1, "Alice", "HR", 60000);
+        emp1.displayInfo();
+
+        Employee emp2 = new Employee(2, "Bob", "IT", 75000);
+        emp2.displayInfo();
+
+        Employee emp3 = new Employee(3, "Charlie", "Finance", 80000);
+        emp3.displayInfo();
+        
+        // Creating an employee using the default constructor
+        Employee emp4 = new Employee();
+        emp4.displayInfo();
+    }
+}
+
+--------------------------------------------------------------------
+
+Q2
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class CricketPlayer {
+    private String name;
+    private int noOfInnings;
+    private int noOfTimesNotOut;
+    private int totalRuns;
+    private double battingAverage;
+
+    // Constructor
+    public CricketPlayer(String name, int noOfInnings, int noOfTimesNotOut, int totalRuns) {
+        this.name = name;
+        this.noOfInnings = noOfInnings;
+        this.noOfTimesNotOut = noOfTimesNotOut;
+        this.totalRuns = totalRuns;
+        this.battingAverage = calculateAverage();
+    }
+
+    // Method to calculate batting average
+    private double calculateAverage() {
+        return (noOfInnings > 0) ? (double) totalRuns / noOfInnings : 0.0;
+    }
+
+    // Static method to calculate the batting average for all players
+    public static void avg(CricketPlayer[] players) {
+        for (CricketPlayer player : players) {
+            player.battingAverage = player.calculateAverage();
+        }
+    }
+
+    // Static method to sort players by batting average
+    public static void sortByAverage(CricketPlayer[] players) {
+        Arrays.sort(players, Comparator.comparingDouble(player -> player.battingAverage));
+    }
+
+    // Method to display player details
+    public void displayInfo() {
+        System.out.printf("Name: %s, Innings: %d, Not Out: %d, Total Runs: %d, Batting Average: %.2f%n",
+                          name, noOfInnings, noOfTimesNotOut, totalRuns, battingAverage);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of players: ");
+        int n = scanner.nextInt();
+        CricketPlayer[] players = new CricketPlayer[n];
+
+        // Input player details
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for player " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.next();
+            System.out.print("Number of Innings: ");
+            int noOfInnings = scanner.nextInt();
+            System.out.print("Number of Times Not Out: ");
+            int noOfTimesNotOut = scanner.nextInt();
+            System.out.print("Total Runs: ");
+            int totalRuns = scanner.nextInt();
+
+            players[i] = new CricketPlayer(name, noOfInnings, noOfTimesNotOut, totalRuns);
+        }
+
+        // Calculate batting averages
+        avg(players);
+
+        // Sort players by batting average
+        sortByAverage(players);
+
+        // Display sorted player details
+        System.out.println("\nPlayers sorted by batting average:");
+        for (CricketPlayer player : players) {
+            player.displayInfo();
+        }
+
+        scanner.close();
+    }
+}

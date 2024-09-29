@@ -1,0 +1,107 @@
+slip 30
+Q1
+import java.util.Scanner;
+
+@FunctionalInterface
+interface CubeCalculator {
+    int calculate(int number);
+}
+
+public class CubeCalculatorDemo {
+    public static void main(String[] args) {
+        // Create a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+        
+        // Prompt the user to enter a number
+        System.out.print("Enter a number to find its cube: ");
+        int number = scanner.nextInt();
+        
+        // Create a lambda expression to calculate the cube
+        CubeCalculator cube = (n) -> n * n * n;
+        
+        // Calculate the cube
+        int result = cube.calculate(number);
+        
+        // Display the result
+        System.out.println("The cube of " + number + " is: " + result);
+        
+        // Close the scanner
+        scanner.close();
+    }
+}
+
+-------------------------------------------------------------------------------------------
+Q2
+// Custom Exception for Invalid Username
+class InvalidUsernameException extends Exception {
+    public InvalidUsernameException(String message) {
+        super(message);
+    }
+}
+
+// Custom Exception for Invalid Password
+class InvalidPasswordException extends Exception {
+    public InvalidPasswordException(String message) {
+        super(message);
+    }
+}
+
+// EmailId Class
+class EmailId {
+    private String username;
+    private String password;
+
+    // Default Constructor
+    public EmailId() {
+        this.username = "defaultUser";
+        this.password = "defaultPass";
+    }
+
+    // Parameterized Constructor
+    public EmailId(String username, String password) throws InvalidUsernameException, InvalidPasswordException {
+        setUsername(username);
+        setPassword(password);
+    }
+
+    // Setters with validation
+    public void setUsername(String username) throws InvalidUsernameException {
+        if (username == null || username.isEmpty()) {
+            throw new InvalidUsernameException("Invalid Username: Username cannot be null or empty.");
+        }
+        this.username = username;
+    }
+
+    public void setPassword(String password) throws InvalidPasswordException {
+        if (password == null || password.length() < 6) {
+            throw new InvalidPasswordException("Invalid Password: Password must be at least 6 characters long.");
+        }
+        this.password = password;
+    }
+
+    // Display method
+    public void display() {
+        System.out.println("Username: " + username);
+        System.out.println("Password: " + password);
+    }
+}
+
+public class EmailIdDemo {
+    public static void main(String[] args) {
+        // Check for command line arguments
+        if (args.length < 2) {
+            System.out.println("Please provide username and password as command line arguments.");
+            return;
+        }
+
+        String username = args[0];
+        String password = args[1];
+
+        try {
+            // Create EmailId object with provided arguments
+            EmailId emailId = new EmailId(username, password);
+            emailId.display();
+        } catch (InvalidUsernameException | InvalidPasswordException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}

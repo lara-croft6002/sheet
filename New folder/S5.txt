@@ -1,0 +1,193 @@
+Slip 5
+Q1
+/**
+ * The MyNumber class encapsulates an integer value and provides methods
+ * to evaluate its properties such as negativity, positivity, zero status,
+ * and odd/even status.
+ */
+public class MyNumber {
+    // Private data member to hold the integer value
+    private int data;
+
+    /**
+     * Default constructor that initializes the number to 0.
+     */
+    public MyNumber() {
+        this.data = 0;
+    }
+
+    /**
+     * Constructor that initializes the number to the given value.
+     * 
+     * @param value the integer value to initialize the MyNumber instance with
+     */
+    public MyNumber(int value) {
+        this.data = value;
+    }
+
+    /**
+     * Checks if the number is negative.
+     * 
+     * @return true if the number is negative, false otherwise
+     */
+    public boolean isNegative() {
+        return data < 0;
+    }
+
+    /**
+     * Checks if the number is positive.
+     * 
+     * @return true if the number is positive, false otherwise
+     */
+    public boolean isPositive() {
+        return data > 0;
+    }
+
+    /**
+     * Checks if the number is zero.
+     * 
+     * @return true if the number is zero, false otherwise
+     */
+    public boolean isZero() {
+        return data == 0;
+    }
+
+    /**
+     * Checks if the number is odd.
+     * 
+     * @return true if the number is odd, false otherwise
+     */
+    public boolean isOdd() {
+        return data % 2 != 0;
+    }
+
+    /**
+     * Checks if the number is even.
+     * 
+     * @return true if the number is even, false otherwise
+     */
+    public boolean isEven() {
+        return data % 2 == 0;
+    }
+
+    /**
+     * Main method to create a MyNumber object and perform tests.
+     * 
+     * @param args command line arguments, where the first argument is used
+     *             to initialize the MyNumber object
+     */
+    public static void main(String[] args) {
+        if (args.length < 1) {
+            System.out.println("Please provide an integer value as a command line argument.");
+            return;
+        }
+
+        try {
+            // Convert command line argument to an integer
+            int value = Integer.parseInt(args[0]);
+            MyNumber myNumber = new MyNumber(value);
+
+            // Perform tests and print results
+            System.out.println("Value: " + value);
+            System.out.println("Is Negative: " + myNumber.isNegative());
+            System.out.println("Is Positive: " + myNumber.isPositive());
+            System.out.println("Is Zero: " + myNumber.isZero());
+            System.out.println("Is Odd: " + myNumber.isOdd());
+            System.out.println("Is Even: " + myNumber.isEven());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please provide a valid integer.");
+        }
+    }
+}
+----------------------------------------------
+Q2
+import java.awt.*;
+import java.awt.event.*;
+
+public class LoginScreen extends Frame implements ActionListener {
+    private TextField usernameField;
+    private TextField passwordField;
+    private Label messageLabel;
+    private Button loginButton;
+    private Button clearButton;
+    
+    private int loginAttempts = 0;
+    private final int maxAttempts = 3;
+
+    public LoginScreen() {
+        // Set up the frame
+        setTitle("Login Screen");
+        setSize(300, 200);
+        setLayout(new FlowLayout());
+
+        // Create components
+        Label usernameLabel = new Label("Username:");
+        Label passwordLabel = new Label("Password:");
+        usernameField = new TextField(15);
+        passwordField = new TextField(15);
+        passwordField.setEchoChar('*'); // Hide password input
+        messageLabel = new Label("");
+
+        loginButton = new Button("Login");
+        clearButton = new Button("Clear");
+
+        // Add components to frame
+        add(usernameLabel);
+        add(usernameField);
+        add(passwordLabel);
+        add(passwordField);
+        add(loginButton);
+        add(clearButton);
+        add(messageLabel);
+
+        // Add action listeners
+        loginButton.addActionListener(this);
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                usernameField.setText("");
+                passwordField.setText("");
+                messageLabel.setText("");
+            }
+        });
+
+        // Close the application on window close
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                System.exit(0);
+            }
+        });
+
+        // Make frame visible
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == loginButton) {
+            try {
+                login(usernameField.getText(), passwordField.getText());
+            } catch (Exception ex) {
+                messageLabel.setText(ex.getMessage());
+            }
+        }
+    }
+
+    private void login(String username, String password) throws Exception {
+        if (loginAttempts >= maxAttempts) {
+            throw new Exception("Maximum login attempts exceeded.");
+        }
+
+        if (username.equals(password)) {
+            throw new Exception("Username and Password cannot be the same.");
+        }
+
+        loginAttempts++;
+        messageLabel.setText("Login successful!");
+        // Here you can add further processing upon successful login
+    }
+
+    public static void main(String[] args) {
+        new LoginScreen();
+    }
+}

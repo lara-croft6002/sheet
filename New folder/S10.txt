@@ -1,0 +1,83 @@
+slip 10
+Q1
+import java.util.Scanner;
+
+public class NameFormatter {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Prompt the user to enter the full name
+        System.out.print("Enter your name (First Middle Last): ");
+        String fullName = scanner.nextLine();
+
+        // Split the name into parts
+        String[] nameParts = fullName.split(" ");
+
+        // Check if the name has at least three parts
+        if (nameParts.length < 3) {
+            System.out.println("Please enter a name with at least a first, middle, and last name.");
+            scanner.close();
+            return;
+        }
+
+        // Extract the names
+        String firstName = nameParts[0];
+        String middleName = nameParts[1];
+        String lastName = nameParts[nameParts.length - 1];
+
+        // Capitalize the first letter of the middle name
+        String capitalizedMiddleName = middleName.substring(0, 1).toUpperCase() + middleName.substring(1);
+
+        // Print the formatted name
+        System.out.println("Formatted Name: " + lastName + ", " + firstName + " " + capitalizedMiddleName);
+
+        scanner.close();
+    }
+}
+
+----------------------------------------------------------------
+Q2
+// Define the Operation interface
+interface Operation {
+    double PI = 3.142; // Constant PI
+
+    double area();   // Method to calculate area
+    double volume(); // Method to calculate volume
+}
+
+// Class Cylinder implementing the Operation interface
+class Cylinder implements Operation {
+    private double radius;
+    private double height;
+
+    // Constructor to initialize radius and height
+    public Cylinder(double radius, double height) {
+        this.radius = radius;
+        this.height = height;
+    }
+
+    // Implement the area method
+    @Override
+    public double area() {
+        return 2 * PI * radius * (radius + height); // Surface area of the cylinder
+    }
+
+    // Implement the volume method
+    @Override
+    public double volume() {
+        return PI * radius * radius * height; // Volume of the cylinder
+    }
+}
+
+// Main class to test the Cylinder class
+public class CylinderAreaVolume {
+    public static void main(String[] args) {
+        // Create a Cylinder object
+        Cylinder cylinder = new Cylinder(5, 10); // Example: radius = 5, height = 10
+
+        // Calculate and display area and volume
+        System.out.printf("Surface Area of Cylinder: %.2f%n", cylinder.area());
+        System.out.printf("Volume of Cylinder: %.2f%n", cylinder.volume());
+    }
+}
+
