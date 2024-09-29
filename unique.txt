@@ -1,0 +1,37 @@
+Slip No. 4: Write a Java program to display the system date and time in various formats (e.g., "Current date is: 31/08/2021").
+MyNumber class:
+
+Slip No. 5: Define a class MyNumber with methods like isNegative, isPositive, isZero, isOdd, isEven. Use command-line arguments to pass a value and test the methods.
+Awt screen for login with exception handling:
+
+Slip No. 5: Design a screen using AWT to accept a username and password. Raise an exception if they are not the same, and allow only three login attempts.
+Menu-driven operations on a matrix (Addition, Multiplication, Transpose):
+
+Slip No. 6: Create a menu-driven program to perform matrix operations like addition, multiplication, and transpose.
+CricketPlayer class and batting average calculation:
+
+Slip No. 7: Create a class CricketPlayer with members for player stats, calculate the batting average, and sort players based on the average.
+Student class with static sorting method:
+
+Slip No. 8: Define a Student class and write a static method to sort an array of students based on their percentage.
+Java package for student grades:
+
+Slip No. 8: Write a Java program to create packages SY and TY, and calculate the grade for a student based on their marks.
+Reading file contents and reversing them:
+
+Slip No. 19: Write a program to read a text file (sample.txt), display its contents in reverse order, and convert the original content to uppercase.
+Staff and OfficeStaff class with inheritance:
+
+Slip No. 19, 21: Define an abstract class Staff and a subclass OfficeStaff. Create objects of OfficeStaff and display all details.
+Random access file operations (book search and total cost):
+
+Slip No. 21: Write a menu-driven program to search for a book by name and display the total cost of all books using a random access file.
+Date validation and custom exception:
+
+Slip No. 23: Define a MyDate class with methods to accept and display dates, and throw a custom exception for invalid dates.
+Simple calculator with GridLayout:
+
+Slip No. 24: Write a Java program that implements a simple calculator using GridLayout for buttons and a text field for displaying results.
+EmailId class with custom exceptions:
+
+Slip No. 22, 30: Define an EmailId class and throw custom exceptions like InvalidUsernameException or InvalidPasswordException for invalid inputs

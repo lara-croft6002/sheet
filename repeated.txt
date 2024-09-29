@@ -1,0 +1,14 @@
+1)Perimeter and area of a rectangle:
+    Slip No. 1, 9, 23, 25, 29.
+2)Create an employee class and count objects:
+    Slip No. 2, 7, 18.
+3)Accept array elements and display them in reverse order:
+    Slip No. 3, 17, 20, 27.
+4)Use a marker interface to create a product class:
+    Slip No. 2, 3, 17.
+5)Astract class 'Order' with subclasses 'Purchase Order' and 'Sales Order':
+    Slip No. 1, 9, 16.
+6)Find the cube of a given number using a function interface:
+    Slip No. 15, 22, 24, 26, 30.
+7)Design a screen for mouse events (MOUSE_MOVED and MOUSE_CLICK):
+    Slip No. 4, 25, 29.
